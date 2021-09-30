@@ -1,0 +1,284 @@
+#!/usr/bin/env bash
+
+# ===========================================================
+#
+# Script para instalação automatizada dos programas
+# cabiveis para cada usuário
+#
+# ===========================================================
+
+# Sessão de captura de informações
+
+echo ""
+echo "======================CONFIGURAÇÃO======================"
+echo ""
+
+read -p "Usuário git: " usergit
+read -p "E-mail git: " emailgit
+echo ""
+read -s -p "Password [sudo]: " password
+clear
+
+# ===========================================================
+
+# Sessão de atualização do sistema
+
+auto_sudo() {
+	echo -e "$password\n" | sudo -S $1
+}
+
+echo ""
+echo "======================ATUALIZAÇÃO======================"
+echo ""
+
+auto_sudo "apt update -y"
+auto_sudo "apt upgrade -y"
+auto_sudo "apt full-upgrade -y"
+
+echo ""
+echo "--- switch ---"
+echo ""
+
+auto_sudo "ubuntu-drivers autoinstall"
+auto_sudo "apt install ubuntu-restricted-extras -y"
+
+echo ""
+echo ">>> Finalizado !"
+echo ""
+
+# ===========================================================
+
+# Sessão de instalação e configuração do git
+
+echo "======================GIT======================"
+echo ""
+
+auto_sudo "apt install git -y"
+
+echo ""
+echo "--- switch ---"
+echo ""
+
+git --version
+
+echo ""
+echo "--- switch ---"
+echo ""
+
+# VERIFICAR SE NÃO VAI TRAVAR NA HORA DE CRIAR O ARQUIVO NA HOME DO ROOT (COLOCAR COMANDO "SU -C")
+# echo -e "[user]\n\tname = $usergit\n\temail = $emailgit" > "/root/.gitconfig"
+
+git config --global user.name "$usergit"
+git config --global user.email "$emailgit"
+
+echo ">>> Usuario git para normal user criado !"
+
+echo ""
+echo ">>> Finalizado !"
+echo ""
+
+# ===========================================================
+
+# Sessão de instalação dos gerenciados de pacotes
+
+echo "======================GERENCIADORES-DE-PACOTES======================"
+echo ""
+
+echo ">>> SNAP <<<"
+echo ""
+
+auto_sudo "apt install snapd -y"
+
+echo ""
+echo ">>> FLATPAK <<<"
+echo ""
+
+auto_sudo "apt install flatpak -y"
+
+# VERIFICAR SE FOR INTERFACE GNOME PARA ADICIONAR PLUGIN
+# REFERENTE: $ apt install gnome-software-plugin-flatpak
+
+echo ""
+echo ">>> CURL <<<"
+echo ""
+
+auto_sudo "apt install curl -y"
+
+echo ""
+echo ">>> NPM <<<"
+echo ""
+
+auto_sudo "apt install npm -y"
+
+# ===========================================================
+
+# Coloque o nome dos programas aqui para validar na hora de
+# perguntar na instalação, adicione ao final do
+# "array_program" e do "array_function" separando apenas por
+# espaços os argumentos, adicionando também sua repectivel
+# função de instalação
+
+# CHROME
+
+f0() {
+
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+	auto_sudo "dpkg -i ./google-chrome-stable_current_amd64.deb"
+
+}
+
+# VS-CODE
+
+f1() {
+
+	auto_sudo "snap install code --classic"
+	auto_sudo "snap refresh code"
+
+}
+
+# DISCORD
+
+f2() {
+
+	auto_sudo "snap install discord"
+	auto_sudo "snap refresh discord"
+
+}
+
+# FILEZILLA
+
+f3() {
+
+	auto_sudo "apt install filezilla -y"
+
+}
+
+# ANYDESK
+
+f4() {
+
+	wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -
+	echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list
+	auto_sudo "apt update -y"
+	auto_sudo "apt install anydesk -y"
+
+}
+
+# POSTMAN
+
+f5() {
+
+	auto_sudo "snap install postman"
+
+}
+
+# MY-SQL/WORKBENCH
+
+f6() {
+
+	auto_sudo "apt install mysql-server -y"
+
+	echo ""
+	echo "--- workbench ---"
+	echo ""
+
+	auto_sudo "snap install mysql-workbench-community"
+
+}
+
+# SIMPLESCREENRECORDER
+
+f7() {
+
+	auto_sudo "apt install simplescreenrecorder -y"
+
+}
+
+# FLAMESHOT
+
+f8() {
+
+	auto_sudo "apt install flameshot -y"
+
+}
+
+# KOLOURPAINT
+
+f9() {
+
+	auto_sudo "apt install kolourpaint -y"
+
+}
+
+array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT")
+
+echo ""
+echo "======================INSTALAÇÃO======================"
+echo ""
+
+for ((i=0; i<${#array_program[@]}; ++i)); do
+
+	read -p "Deseja instalar ${array_program[$i]} (y/n)? " array_answer[$i]
+
+done
+
+echo ""
+
+for ((i=0; i<${#array_program[@]}; ++i)); do
+
+	if [[ "${array_answer[$i]}" = "y" || "${array_answer[$i]}" = "Y" ]]; then
+		
+		echo "======================${array_program[$i]}======================"
+		echo ""
+		f"$i"
+		echo ""
+		echo ">>> Finalizado !"
+		echo ""
+
+	fi
+
+done
+
+echo ""
+echo "======================LIMPAR======================"
+echo ""
+
+auto_sudo "apt install -f"
+auto_sudo "apt --fix-broken install"
+
+echo ""
+echo "--- switch ---"
+echo ""
+
+auto_sudo "apt full-upgrade -y"
+
+echo ""
+echo "--- switch ---"
+echo ""
+
+auto_sudo "apt clean -y"
+auto_sudo "apt autoclean -y"
+auto_sudo "apt autoremove -y"
+
+echo ""
+echo "======================Version 1.0.1======================"
+echo ""
+echo ""
+echo "A simple solution..."
+echo ""
+echo "Created by: Crazy Group Inc © (CG)"
+echo ""
+echo ""
+echo "=========================================================="
+
+rm -R -f ../cork
+
+echo ""
+echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
+echo ""
+
+seconds=30; date1=$((`date +%s` + $seconds)); while [ "$date1" -ge `date +%s` ]; do echo -ne "$(date -u --date @$(($date1 - `date +%s` )) +%H:%M:%S)\r"; done ;
+
+reboot
+
+# ===========================================================
