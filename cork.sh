@@ -271,7 +271,7 @@ echo ""
 echo ""
 echo "=========================================================="
 
-rm -R -f ../cork
+rm ./cork.sh
 
 echo ""
 echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
