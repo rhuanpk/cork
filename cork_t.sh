@@ -113,12 +113,12 @@ array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-
 
 ress="n"
 
-while [ "$ress" == "n" || "$ress" == "N" ] do
+while [ "${ress,,}" == "n" ]; do
 
 	clear
 
 	echo ""
-	echo "======================CONFIGURAÇÃO======================"
+	echo "======================   CONFIGURAÇÃO   ======================"
 	echo ""
 
 	read -p "Usuário git: " usergit
@@ -129,19 +129,20 @@ while [ "$ress" == "n" || "$ress" == "N" ] do
 	read -s -p "Password [sudo]: " password
 
 	echo ""
+	echo ""
 
 	read -p "As informações estão corretas (y/n)? " ress
 
 	clear
-	
+
 done
 
 ress="n"
 
-while [ "$ress" == "n" || "$ress" == "N" ] do
+while [ "$ress" == "n" -o "$ress" == "N" ]; do
 
 	echo ""
-	echo "======================PROGRAMAS======================"
+	echo "======================   PROGRAMAS   ======================"
 	echo ""
 
 	for ((i=0; i<${#array_program[@]}; ++i)); do
@@ -150,6 +151,7 @@ while [ "$ress" == "n" || "$ress" == "N" ] do
 
 	done
 
+	echo ""
 	read -p "Programas a serem instalados estão corretos (y/n)? " ress
 
 	clear
@@ -166,30 +168,45 @@ auto_sudo() {
 
 }
 
+sleep 1.5
+
 echo ""
-echo ">>>>>>>>>>>>>>>>>>>>>>ATUALIZAÇÃO<<<<<<<<<<<<<<<<<<<<<<"
+echo ">>>>>>>>>>>>>>>>>>>>>>   ATUALIZAÇÃO   <<<<<<<<<<<<<<<<<<<<<<"
 echo ""
 
 auto_sudo "apt update -y"
 auto_sudo "apt upgrade -y"
 auto_sudo "apt full-upgrade -y"
 
+# ===================================================
+#
+# CORRIGIR BLOCO DE CÓDIGO
+#
+# ===================================================
+#
+# echo ""
+# echo "--- switch ---"
+# echo ""
+#
+# auto_sudo "ubuntu-drivers autoinstall"
+# auto_sudo "apt install ubuntu-restricted-extras -y"
+#
+# ===================================================
+
 echo ""
-echo "--- switch ---"
+echo ">>>>>>>>>>>>>>>>>>>>>>   FINALIZADO   <<<<<<<<<<<<<<<<<<<<<<"
 echo ""
 
-auto_sudo "ubuntu-drivers autoinstall"
-auto_sudo "apt install ubuntu-restricted-extras -y"
+sleep 1.5
 
-echo ""
-echo ">>>>>>>>>>>>>>>>>>>>>>FINALIZADO<<<<<<<<<<<<<<<<<<<<<<"
-echo ""
+clear
 
 # ===========================================================
 
 # Sessão de instalação e configuração do git
 
-echo "======================GIT======================"
+echo ""
+echo "======================   GIT   ======================"
 echo ""
 
 auto_sudo "apt install git -y"
@@ -216,11 +233,13 @@ echo ""
 echo ">>> Finalizado !"
 echo ""
 
+sleep 1.5
+
 # ===========================================================
 
 # Sessão de instalação dos gerenciados de pacotes
 
-echo "======================GERENCIADORES-DE-PACOTES======================"
+echo "======================   GERENCIADORES-DE-PACOTES   ======================"
 echo ""
 
 echo ">>> SNAP <<<"
@@ -249,19 +268,25 @@ echo ""
 
 auto_sudo "apt install npm -y"
 
+sleep 5
+
+clear
+
 # ===========================================================
 
 # Sessão de instalação dos programas selecionados
 
 echo ""
-echo "======================INSTALAÇÃO======================"
+echo ">>>>>>>>>>>>>>>>>>>>>>   INSTALAÇÃO   <<<<<<<<<<<<<<<<<<<<<<"
+echo ""
+echo ""
 echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
 	if [[ "${array_answer[$i]}" = "y" || "${array_answer[$i]}" = "Y" ]]; then
 		
-		echo "======================${array_program[$i]}======================"
+		echo "======================   ${array_program[$i]}   ======================"
 		echo ""
 		f"$i"
 		echo ""
@@ -278,7 +303,7 @@ done
 # e possivelmente quebrados também
 
 echo ""
-echo "======================LIMPAR======================"
+echo ">>>>>>>>>>>>>>>>>>>>>>   LIMPAR   <<<<<<<<<<<<<<<<<<<<<<"
 echo ""
 
 auto_sudo "apt install -f"
