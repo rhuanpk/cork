@@ -113,7 +113,7 @@ array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-
 
 ress="n"
 
-while (("$ress" == "n" || "$ress" == "N")) do
+while [ "$ress" == "n" || "$ress" == "N" ] do
 
 	clear
 
@@ -133,12 +133,12 @@ while (("$ress" == "n" || "$ress" == "N")) do
 	read -p "As informações estão corretas (y/n)? " ress
 
 	clear
-
+	
 done
 
 ress="n"
 
-while (("$ress" == "n" || "$ress" == "N")) do
+while [ "$ress" == "n" || "$ress" == "N" ] do
 
 	echo ""
 	echo "======================PROGRAMAS======================"
