@@ -6,7 +6,7 @@
 # cabiveis para cada usuário
 #
 # ===========================================================
-
+# 
 # Coloque o nome dos programas aqui para validar na hora de
 # perguntar na instalação, adicione ao final do
 # "array_program" e do "array_function" separando apenas por
@@ -152,11 +152,30 @@ while [ "$ress" == "n" -o "$ress" == "N" ]; do
 	done
 
 	echo ""
+
 	read -p "Programas a serem instalados estão corretos (y/n)? " ress
 
 	clear
 
 done
+
+arquivo_programas() {
+
+	for ((i=0; i<${#array_program[@]}; ++i)); do
+
+		echo "${array_program[$i]}:${array_answer[$i]^^}" >> ./programas.txt
+
+	done
+
+	arq=./programas.txt
+
+	printf '\n%23s %9s\n\n' 'PROGRAMS' 'YES/NO'
+	printf '%23s ---- %1s\n' $(cut -d':' -f1- --output-delimiter=' ' $arq)
+	printf '\n'
+
+}
+
+arquivo_programas
 
 # ===========================================================
 
@@ -221,13 +240,12 @@ echo ""
 echo "--- switch ---"
 echo ""
 
-# VERIFICAR SE NÃO VAI TRAVAR NA HORA DE CRIAR O ARQUIVO NA HOME DO ROOT (COLOCAR COMANDO "SU -C")
-# echo -e "[user]\n\tname = $usergit\n\temail = $emailgit" > "/root/.gitconfig"
+auto_sudo "su -c 'echo -e "[user]\n\tname = $usergit\n\temail = $emailgit" > /root/.gitconfig'"
 
 git config --global user.name "$usergit"
 git config --global user.email "$emailgit"
 
-echo ">>> Usuario git para normal user criado !"
+echo ">>> Usuario git para normal/root user criado !"
 
 echo ""
 echo ">>> Finalizado !"
