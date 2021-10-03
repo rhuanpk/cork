@@ -1,2 +1,0 @@
-echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | auto_sudo "debconf-set-selections"
-auto_sudo apt-get install ttf-mscorefonts-installer

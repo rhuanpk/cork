@@ -6,7 +6,9 @@
 # cabiveis para cada usuário
 #
 # ===========================================================
-# 
+
+# ===========================================================
+
 # Coloque o nome dos programas aqui para validar na hora de
 # perguntar na instalação, adicione ao final do
 # "array_program" e do "array_function" separando apenas por
@@ -211,6 +213,11 @@ auto_sudo "apt full-upgrade -y"
 # auto_sudo "apt install ubuntu-restricted-extras -y"
 #
 # ===================================================
+# 
+# echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | auto_sudo "debconf-set-selections"
+# auto_sudo "apt install ttf-mscorefonts-installer"
+#
+# ===================================================
 
 echo ""
 echo ">>>>>>>>>>>>>>>>>>>>>>   FINALIZADO   <<<<<<<<<<<<<<<<<<<<<<"
@@ -270,9 +277,6 @@ echo ">>> FLATPAK <<<"
 echo ""
 
 auto_sudo "apt install flatpak -y"
-
-# VERIFICAR SE FOR INTERFACE GNOME PARA ADICIONAR PLUGIN
-# REFERENTE: $ apt install gnome-software-plugin-flatpak
 
 echo ""
 echo ">>> CURL <<<"
