@@ -199,26 +199,6 @@ auto_sudo "apt update -y"
 auto_sudo "apt upgrade -y"
 auto_sudo "apt full-upgrade -y"
 
-# ===================================================
-#
-# CORRIGIR BLOCO DE CÓDIGO
-#
-# ===================================================
-#
-# echo ""
-# echo "--- switch ---"
-# echo ""
-#
-# auto_sudo "ubuntu-drivers autoinstall"
-# auto_sudo "apt install ubuntu-restricted-extras -y"
-#
-# ===================================================
-# 
-# echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | auto_sudo "debconf-set-selections"
-# auto_sudo "apt install ttf-mscorefonts-installer"
-#
-# ===================================================
-
 echo ""
 echo ">>>>>>>>>>>>>>>>>>>>>>   FINALIZADO   <<<<<<<<<<<<<<<<<<<<<<"
 echo ""
