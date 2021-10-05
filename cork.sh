@@ -165,11 +165,11 @@ arquivo_programas() {
 
 	for ((i=0; i<${#array_program[@]}; ++i)); do
 
-		echo "${array_program[$i]}:${array_answer[$i]^^}" >> ./programas.txt
+		echo "${array_program[$i]}:${array_answer[$i]^^}" >> ./temp.txt
 
 	done
 
-	arq=./programas.txt
+	arq=./temp.txt
 
 	printf '\n%23s %9s\n\n' 'PROGRAMS' 'YES/NO'
 	printf '%23s ---- %1s\n' $(cut -d':' -f1- --output-delimiter=' ' $arq)
@@ -177,7 +177,9 @@ arquivo_programas() {
 
 }
 
-arquivo_programas
+arquivo_programas > programas.txt
+
+rm ./temp.txt
 
 # ===========================================================
 
