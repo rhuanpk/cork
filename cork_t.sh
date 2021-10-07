@@ -229,8 +229,6 @@ echo ""
 echo "--- switch ---"
 echo ""
 
-auto_sudo "su -c 'echo -e "[user]\n\tname = $usergit\n\temail = $emailgit" > /root/.gitconfig'"
-
 git config --global user.name "$usergit"
 git config --global user.email "$emailgit"
 
@@ -328,7 +326,7 @@ auto_sudo "apt autoclean -y"
 auto_sudo "apt autoremove -y"
 
 echo ""
-echo "======================Version 1.0.1======================"
+echo "======================   Version 1.0.1   ======================"
 echo ""
 echo ""
 echo "A simple solution..."
@@ -336,7 +334,7 @@ echo ""
 echo "Created by: Crazy Group Inc © (CG)"
 echo ""
 echo ""
-echo "=========================================================="
+echo "================================================================"
 
 rm ./google*
 
