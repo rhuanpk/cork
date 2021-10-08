@@ -326,7 +326,7 @@ auto_sudo "apt autoclean -y"
 auto_sudo "apt autoremove -y"
 
 echo ""
-echo "======================   Version 1.0.1   ======================"
+echo "======================   Version 2.2.1   ======================"
 echo ""
 echo ""
 echo "A simple solution..."
