@@ -17,7 +17,7 @@
 
 auto_sudo() {
 
-	echo -e "$password\n" | sudo -S $1
+	echo -e "${password}\n" | sudo -S $1
 
 }
 
@@ -58,12 +58,10 @@ fun3() {
 
 # ANYDESK
 
-# Colocar as aspas aninhadas dentro de "$()" para testar a eficácia
-
 fun4() {
 
-	auto_sudo "su -c 'wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -'"
-	auto_sudo "su -c 'echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list'"
+	echo -e "${password}\n" | sudo -S su -c "wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - 2>> ./error_log.txt"
+	echo -e "${password}\n" | sudo -S su -c "echo 'deb http://deb.anydesk.com/ all main' > /etc/apt/sources.list.d/anydesk-stable.list"
 	auto_sudo "apt update -y"
 	auto_sudo "apt install anydesk -y"
 
@@ -145,7 +143,7 @@ arquivo_programas() {
 
 print_usage() {
 
-   echo -e "Usege: $ ./$(basename $0)"
+   echo -e "For usage, run: $ ./$(basename $0)"
 
 }
 
