@@ -3,21 +3,27 @@
 # ===========================================================
 #
 # Script para instalação automatizada dos programas
-# cabiveis para cada usuário
+# de cada usuário
 #
 # ===========================================================
 
 # ===========================================================
+#
+# Sessão de declaração de funções
+#
+# ===========================================================
 
-# Coloque o nome dos programas aqui para validar na hora de
-# perguntar na instalação, adicione ao final do
-# "array_program" e do "array_function" separando apenas por
-# espaços os argumentos, adicionando também sua repectivel
-# função de instalação
+# Passa a senha para o comando sudo
+
+auto_sudo() {
+
+	echo -e "${password}\n" | sudo -S $1
+
+}
 
 # CHROME
 
-f0() {
+fun0() {
 
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	auto_sudo "dpkg -i ./google-chrome-stable_current_amd64.deb"
@@ -26,7 +32,7 @@ f0() {
 
 # VS-CODE
 
-f1() {
+fun1() {
 
 	auto_sudo "snap install code --classic"
 	auto_sudo "snap refresh code"
@@ -35,7 +41,7 @@ f1() {
 
 # DISCORD
 
-f2() {
+fun2() {
 
 	auto_sudo "snap install discord"
 	auto_sudo "snap refresh discord"
@@ -44,7 +50,7 @@ f2() {
 
 # FILEZILLA
 
-f3() {
+fun3() {
 
 	auto_sudo "apt install filezilla -y"
 
@@ -52,10 +58,10 @@ f3() {
 
 # ANYDESK
 
-f4() {
+fun4() {
 
-	auto_sudo "su -c 'wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add -'"
-	auto_sudo "su -c 'echo "deb http://deb.anydesk.com/ all main" > /etc/apt/sources.list.d/anydesk-stable.list'"
+	echo -e "${password}\n" | sudo -S su -c "wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - 2>> ./error_log.txt"
+	echo -e "${password}\n" | sudo -S su -c "echo 'deb http://deb.anydesk.com/ all main' > /etc/apt/sources.list.d/anydesk-stable.list"
 	auto_sudo "apt update -y"
 	auto_sudo "apt install anydesk -y"
 
@@ -63,7 +69,7 @@ f4() {
 
 # POSTMAN
 
-f5() {
+fun5() {
 
 	auto_sudo "snap install postman"
 
@@ -71,7 +77,7 @@ f5() {
 
 # MY-SQL/WORKBENCH
 
-f6() {
+fun6() {
 
 	auto_sudo "apt install mysql-server -y"
 
@@ -85,7 +91,7 @@ f6() {
 
 # SIMPLESCREENRECORDER
 
-f7() {
+fun7() {
 
 	auto_sudo "apt install simplescreenrecorder -y"
 
@@ -93,7 +99,7 @@ f7() {
 
 # FLAMESHOT
 
-f8() {
+fun8() {
 
 	auto_sudo "apt install flameshot -y"
 
@@ -101,13 +107,84 @@ f8() {
 
 # KOLOURPAINT
 
-f9() {
+fun9() {
 
 	auto_sudo "apt install kolourpaint -y"
 
 }
 
-array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT")
+# NPM
+
+fun10() {
+
+	auto_sudo "apt install npm -y"
+
+}
+
+# Cria o arquivo que conterá os programas instalados
+
+arquivo_programas() {
+
+	for ((i=0; i<${#array_program[@]}; ++i)); do
+
+		echo "${array_program[$i]}:${array_answer[$i]^^}" >> ./temp.txt
+
+	done
+
+	arq=./temp.txt
+
+	printf '\n%23s %9s\n\n' 'PROGRAMS' 'YES/NO'
+	printf '%23s ---- %1s\n' $(cut -d':' -f1- --output-delimiter=' ' $arq)
+	printf '\n'
+
+}
+
+# Imprime o modo de uso do programa (usado no GETOPTS)
+
+print_usage() {
+
+   echo -e "For usage, run: $ ./$(basename $0)"
+
+}
+
+# ===========================================================
+#
+# Sessão de declaração de variáveis
+#
+# ===========================================================
+
+version="2.2.1"
+
+array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
+
+# ===========================================================
+#
+# Inicio do programa
+#
+# ===========================================================
+
+# ===========================================================
+
+# Sessão de captura de argumentso (GETOPTS)
+
+while getopts 'vh' opts 2> /dev/null; do
+   case ${opts} in
+      v)
+         echo -e "cork version ${version}"
+         exit
+         ;;
+      h)
+         print_usage
+         exit
+         ;;
+      ?)
+         print_usage
+         exit 1
+         ;;
+      esac
+done
+
+shift $((OPTIND - 1))
 
 # ===========================================================
 
@@ -141,7 +218,7 @@ done
 
 ress="n"
 
-while [ "$ress" == "n" -o "$ress" == "N" ]; do
+while [ "${ress,,}" == "n" ]; do
 
 	echo ""
 	echo "======================   PROGRAMAS   ======================"
@@ -161,22 +238,6 @@ while [ "$ress" == "n" -o "$ress" == "N" ]; do
 
 done
 
-arquivo_programas() {
-
-	for ((i=0; i<${#array_program[@]}; ++i)); do
-
-		echo "${array_program[$i]}:${array_answer[$i]^^}" >> ./temp.txt
-
-	done
-
-	arq=./temp.txt
-
-	printf '\n%23s %9s\n\n' 'PROGRAMS' 'YES/NO'
-	printf '%23s ---- %1s\n' $(cut -d':' -f1- --output-delimiter=' ' $arq)
-	printf '\n'
-
-}
-
 arquivo_programas > programas.txt
 
 rm ./temp.txt
@@ -184,12 +245,6 @@ rm ./temp.txt
 # ===========================================================
 
 # Sessão de atualização do sistema
-
-auto_sudo() {
-
-	echo -e "$password\n" | sudo -S $1
-
-}
 
 sleep 1.5
 
@@ -232,7 +287,7 @@ echo ""
 git config --global user.name "$usergit"
 git config --global user.email "$emailgit"
 
-echo ">>> Usuario git para normal/root user criado !"
+echo ">>> Usuario git para normal user criado !"
 
 echo ""
 echo ">>> Finalizado !"
@@ -264,12 +319,6 @@ echo ""
 
 auto_sudo "apt install curl -y"
 
-echo ""
-echo ">>> NPM <<<"
-echo ""
-
-auto_sudo "apt install npm -y"
-
 sleep 5
 
 clear
@@ -282,15 +331,14 @@ echo ""
 echo ">>>>>>>>>>>>>>>>>>>>>>   INSTALAÇÃO   <<<<<<<<<<<<<<<<<<<<<<"
 echo ""
 echo ""
-echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	if [[ "${array_answer[$i]}" = "y" || "${array_answer[$i]}" = "Y" ]]; then
+	if [ "${array_answer[$i],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[$i]}   ======================"
 		echo ""
-		f"$i"
+		fun"$i"
 		echo ""
 		echo ">>> Finalizado !"
 		echo ""
@@ -315,18 +363,12 @@ echo ""
 echo "--- switch ---"
 echo ""
 
-auto_sudo "apt full-upgrade -y"
-
-echo ""
-echo "--- switch ---"
-echo ""
-
 auto_sudo "apt clean -y"
 auto_sudo "apt autoclean -y"
 auto_sudo "apt autoremove -y"
 
 echo ""
-echo "======================   Version 2.2.1   ======================"
+echo "======================   Version ${version}   ======================"
 echo ""
 echo ""
 echo "A simple solution..."
@@ -344,7 +386,16 @@ echo ""
 echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
 echo ""
 
-seconds=30; date1=$((`date +%s` + $seconds)); while [ "$date1" -ge `date +%s` ]; do echo -ne "$(date -u --date @$(($date1 - `date +%s` )) +%H:%M:%S)\r"; done ;
+seconds=30
+
+sif=$(( $(date +%s) + ${seconds} )) #seconds in the future
+
+while [ ${sif} -ge $(date +%s) ]; do 
+	
+	sifdiff=$(( ${sif} - $(date +%s) ))
+	echo -ne "$(date -u --date @${sifdiff} +%H:%M:%S)\r"
+	
+done
 
 reboot
 
