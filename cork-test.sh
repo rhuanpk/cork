@@ -26,7 +26,7 @@ auto_sudo() {
 fun0() {
 
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	auto_sudo "dpkg -i ./google-chrome-stable_current_amd64.deb"
+	auto_sudo "dpkg -i ./google*.deb"
 
 }
 
