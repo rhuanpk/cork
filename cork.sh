@@ -154,7 +154,7 @@ print_usage() {
 #
 # ===========================================================
 
-readonly version="2.3.2"
+readonly version="2.4.2"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
