@@ -26,7 +26,7 @@ auto_sudo() {
 fun0() {
 
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	auto_sudo "dpkg -i ./google-chrome-stable_current_amd64.deb"
+	auto_sudo "dpkg -i ./google*.deb"
 
 }
 
@@ -34,8 +34,8 @@ fun0() {
 
 fun1() {
 
-	auto_sudo "snap install code --classic"
-	auto_sudo "snap refresh code"
+	wget https://code.visualstudio.com/docs/?dv=linux64_deb
+	auto_sudo "dpkg -i ./code*.deb"
 
 }
 
@@ -43,8 +43,8 @@ fun1() {
 
 fun2() {
 
-	auto_sudo "snap install discord"
-	auto_sudo "snap refresh discord"
+	wget https://discord.com/api/download?platform=linux&format=deb
+	auto_sudo "dpkg -i ./discord*.deb"
 
 }
 
@@ -60,7 +60,7 @@ fun3() {
 
 fun4() {
 
-	echo -e "${password}\n" | sudo -S su -c "wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - 2>> ./error_log.txt"
+	echo -e "${password}\n" | sudo -S su -c "wget -qO - https://keys.anydesk.com/repos/DEB-GPG-KEY | apt-key add - 2>> /dev/null"
 	echo -e "${password}\n" | sudo -S su -c "echo 'deb http://deb.anydesk.com/ all main' > /etc/apt/sources.list.d/anydesk-stable.list"
 	auto_sudo "apt update -y"
 	auto_sudo "apt install anydesk -y"
@@ -71,7 +71,8 @@ fun4() {
 
 fun5() {
 
-	auto_sudo "snap install postman"
+	wget https://dl.pstmn.io/download/latest/linux64
+	auto_sudo "dpkg -i ./Postman*.deb"
 
 }
 
