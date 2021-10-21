@@ -34,8 +34,14 @@ fun0() {
 
 fun1() {
 
-	wget https://code.visualstudio.com/docs/?dv=linux64_deb
-	auto_sudo "dpkg -i ./code*.deb"
+	wget -O- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+	auto_sudo "install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/"
+	echo -e "${password}\n" | sudo -S sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+	rm -f packages.microsoft.gpg
+	auto_sudo "apt install apt-transport-https -y"
+	auto_sudo "apt update -y"
+	auto_sudo "apt install code -y"
+	# auto_sudo "apt install code-insiders -y"
 
 }
 
@@ -43,8 +49,11 @@ fun1() {
 
 fun2() {
 
-	wget https://discord.com/api/download?platform=linux&format=deb
+	wget https://discord.com/api/download?platform=linux&format=deb -O discord_tmp.deb
 	auto_sudo "dpkg -i ./discord*.deb"
+	auto_sudo "apt install -f -y"
+	# Talvez haverá a necessidade de descomentar a linha a baixo
+	# auto_sudo "dpkg -i ./discord*.deb"
 
 }
 
@@ -71,9 +80,10 @@ fun4() {
 
 fun5() {
 
-	wget https://dl.pstmn.io/download/latest/linux64
-	auto_sudo "dpkg -i ./Postman*.deb"
-
+	wget https://dl.pstmn.io/download/latest/linux64 -O postman_temp.tar.gz
+	auto_sudo "tar -zxvf postman*.tar.gz -C /opt/"
+	auto_sudo "ln -s /opt/Postman/Postman /usr/bin/postman"
+	echo -e "[Desktop Entry]\n\tEncoding=UTF-8\n\tName=Postman\n\tComment=Postman API Client\n\tIcon=/opt/Postman/app/resources/app/assets/icon.png\n\tExec=/usr/bin/postman\n\tTerminal=false\n\tType=Application\n\tCategories=Desenvolvimento" > ${HOME}/.local/share/applications/postman.desktopp
 }
 
 # MY-SQL/WORKBENCH
@@ -379,7 +389,7 @@ echo ""
 echo ""
 echo "================================================================"
 
-rm ./google*
+rm ./*.deb
 
 rm ./README.md
 
