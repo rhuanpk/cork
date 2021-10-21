@@ -83,7 +83,9 @@ fun5() {
 	wget https://dl.pstmn.io/download/latest/linux64 -O postman_temp.tar.gz
 	auto_sudo "tar -zxvf postman*.tar.gz -C /opt/"
 	auto_sudo "ln -s /opt/Postman/Postman /usr/bin/postman"
-	echo -e "[Desktop Entry]\n\tEncoding=UTF-8\n\tName=Postman\n\tComment=Postman API Client\n\tIcon=/opt/Postman/app/resources/app/assets/icon.png\n\tExec=/usr/bin/postman\n\tTerminal=false\n\tType=Application\n\tCategories=Desenvolvimento" > ${HOME}/.local/share/applications/postman.desktopp
+	echo -e "[Desktop Entry]\n\tEncoding=UTF-8\n\tName=Postman\n\tComment=Postman API Client\n\tIcon=/opt/Postman/app/resources/app/assets/icon.png\n\tExec=/usr/bin/postman\n\tTerminal=false\n\tType=Application\n\tCategories=Desenvolvimento" > ${HOME}/.local/share/applications/postman.desktop
+	chmod +x ${HOME}/.local/share/applications/postman.desktop
+
 }
 
 # MY-SQL/WORKBENCH
