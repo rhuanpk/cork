@@ -49,7 +49,8 @@ fun1() {
 
 fun2() {
 
-	wget https://discord.com/api/download?platform=linux&format=deb -O discord_tmp.deb
+	wget -O discord_tmp.deb https://discord.com/api/download?platform=linux&format=deb
+	sleep 10
 	auto_sudo "dpkg -i ./discord*.deb"
 	auto_sudo "apt install -f -y"
 	# Talvez haverá a necessidade de descomentar a linha a baixo
@@ -166,7 +167,7 @@ print_usage() {
 #
 # ===========================================================
 
-readonly version="2.4.2"
+readonly version="2.4.4"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
@@ -393,7 +394,7 @@ echo "================================================================"
 
 rm ./*.deb
 
-rm ./README.md
+rm ./*.tar.gz
 
 rm ./cork.sh
 
