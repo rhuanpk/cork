@@ -49,7 +49,7 @@ fun1() {
 
 fun2() {
 
-	wget -O discord_tmp.deb https://discord.com/api/download?platform=linux&format=deb
+	wget -O discord_tmp.deb "https://discord.com/api/download?platform=linux&format=deb"
 	sleep 10
 	auto_sudo "dpkg -i ./discord*.deb"
 	auto_sudo "apt install -f -y"
