@@ -138,11 +138,13 @@ readonly version="2.4.4"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
+install_dir="${HOME}/instalacao"
+
 password=${install_dir}/pass.txt
 
 for ((i=0; i<=${#array_program[@]}; ++i)); do
     
-        array_answer[${i}]=$(cat ress.txt | tr '[:blank:]' '\n' | sed -n "${i}p")
+        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -n "${i}p")
 
 done
 
@@ -220,6 +222,8 @@ auto_sudo "rm /usr/local/bin/script-cork.sh"
 rm ${install_dir}/ress.txt
 
 rm ${install_dir}/pass.txt
+
+rm ${HOME}/.config/autostart/cork.desktop
 
 echo ""
 echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
