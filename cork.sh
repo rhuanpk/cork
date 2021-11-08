@@ -126,7 +126,7 @@ echo "${password}" > ${install_dir}/pass.txt
 
 wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop"
 
-[ -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
+[ ! -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
 
 # Baixa .sh de instalação dos programas
 
@@ -134,7 +134,7 @@ wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/s
 
 chmod +x ${install_dir}/script-cork.sh
 
-auto_sudo "mv ./script-cork.sh /usr/local/bin"
+auto_sudo "mv ${install_dir}/script-cork.sh /usr/local/bin"
 
 # Sessão de captura dos programas a serem instalados
 
