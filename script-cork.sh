@@ -140,11 +140,11 @@ array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-
 
 install_dir="${HOME}/instalacao"
 
-password=${install_dir}/pass.txt
+password=$(cat ${install_dir}/pass.txt)
 
 for ((i=0; i<=${#array_program[@]}; ++i)); do
     
-        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -n "${i}p")
+        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -ne "${i}p")
 
 done
 
@@ -224,6 +224,8 @@ rm ${install_dir}/ress.txt
 rm ${install_dir}/pass.txt
 
 rm ${HOME}/.config/autostart/cork.desktop
+
+rmdir ${install_dir}
 
 echo ""
 echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
