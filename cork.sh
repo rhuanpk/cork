@@ -88,6 +88,8 @@ install_dir="${HOME}/instalacao"
 
 mkdir ${install_dir}
 
+mv ./cork.sh ${install_dir}
+
 # ===========================================================
 
 # Sessão de captura de informações
@@ -122,13 +124,15 @@ echo "${password}" > ${install_dir}/pass.txt
 
 # Baixa .desktop para o autostart
 
-wget https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop
+wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop"
 
 [ -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
 
 # Baixa .sh de instalação dos programas
 
-wget https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh
+wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh"
+
+chmod +x ${install_dir}/script-cork.sh
 
 auto_sudo "mv ./script-cork.sh /usr/local/bin"
 

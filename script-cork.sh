@@ -215,6 +215,8 @@ rm ${install_dir}/*.tar.gz
 
 rm ${install_dir}/cork.sh
 
+auto_sudo "rm /usr/local/bin/script-cork.sh"
+
 rm ${install_dir}/ress.txt
 
 rm ${install_dir}/pass.txt
