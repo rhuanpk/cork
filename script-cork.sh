@@ -18,8 +18,8 @@ auto_sudo() {
 
 fun0() {
 
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	auto_sudo "dpkg -i ./google*.deb"
+	wget -P ${install_dir} "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+	auto_sudo "dpkg -i ${install_dir}/google*.deb"
 
 }
 
@@ -42,9 +42,9 @@ fun1() {
 
 fun2() {
 
-	wget -O discord_tmp.deb "https://discord.com/api/download?platform=linux&format=deb"
+	wget -O discord_tmp.deb -P ${install_dir} "https://discord.com/api/download?platform=linux&format=deb"
 	sleep 10
-	auto_sudo "dpkg -i ./discord*.deb"
+	auto_sudo "dpkg -i ${install_dir}/discord*.deb"
 	auto_sudo "apt install -f -y"
 	# Talvez haverá a necessidade de descomentar a linha a baixo
 	# auto_sudo "dpkg -i ./discord*.deb"
@@ -74,8 +74,8 @@ fun4() {
 
 fun5() {
 
-	wget https://dl.pstmn.io/download/latest/linux64 -O postman_temp.tar.gz
-	auto_sudo "tar -zxvf postman*.tar.gz -C /opt/"
+	wget -O postman_temp.tar.gz -P ${install_dir} "https://dl.pstmn.io/download/latest/linux64" 
+	auto_sudo "tar -zxvf ${install_dir}/postman*.tar.gz -C /opt/"
 	auto_sudo "ln -s /opt/Postman/Postman /usr/bin/postman"
 	echo -e "[Desktop Entry]\n\tEncoding=UTF-8\n\tName=Postman\n\tComment=Postman API Client\n\tIcon=/opt/Postman/app/resources/app/assets/icon.png\n\tExec=/usr/bin/postman\n\tTerminal=false\n\tType=Application\n\tCategories=Desenvolvimento" > ${HOME}/.local/share/applications/postman.desktop
 	chmod +x ${HOME}/.local/share/applications/postman.desktop
@@ -138,7 +138,7 @@ readonly version="2.4.4"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
-password=./pass.txt
+password=${install_dir}/pass.txt
 
 for ((i=0; i<=${#array_program[@]}; ++i)); do
     
@@ -209,15 +209,15 @@ echo ""
 echo ""
 echo "================================================================"
 
-rm ./*.deb
+rm ${install_dir}/*.deb
 
-rm ./*.tar.gz
+rm ${install_dir}/*.tar.gz
 
-rm ./cork.sh
+rm ${install_dir}/cork.sh
 
-rm ./ress.txt
+rm ${install_dir}/ress.txt
 
-rm ./pass.txt
+rm ${install_dir}/pass.txt
 
 echo ""
 echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"

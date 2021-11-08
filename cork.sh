@@ -13,17 +13,25 @@
 #
 # ===========================================================
 
+# Passa a senha para o comando sudo
+
+auto_sudo() {
+
+	echo -e "${password}\n" | sudo -S ${1}
+
+}
+
 # Cria o arquivo que conterá os programas instalados
 
 arquivo_programas() {
 
 	for ((i=0; i<${#array_program[@]}; ++i)); do
 
-		echo "${array_program[${i}]}:${array_answer[${i}]^^}" >> ./temp.txt
+		echo "${array_program[${i}]}:${array_answer[${i}]^^}" >> ${install_dir}/temp.txt
 
 	done
 
-	arq=./temp.txt
+	arq=${install_dir}/temp.txt
 
 	printf '\n%23s %9s\n\n' 'PROGRAMS' 'YES/NO'
 	printf '%23s ---- %1s\n' $(cut -d':' -f1- --output-delimiter=' ' ${arq})
@@ -70,23 +78,15 @@ readonly version="2.4.4"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
+install_dir="${HOME}/instalacao"
+
 # ===========================================================
 #
 # Inicio do programa
 #
 # ===========================================================
 
-# Baixa .desktop para o autostart
-
-wget https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop
-
-[ -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
-
-# Baixa .sh de instalação dos programas
-
-wget https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh
-
-mv ./script-cork.sh /usr/local/bin
+mkdir ${install_dir}
 
 # ===========================================================
 
@@ -118,7 +118,21 @@ while [ "${ress,,}" == "n" ]; do
 
 done
 
-echo "${password}" > ./pass.txt
+echo "${password}" > ${install_dir}/pass.txt
+
+# Baixa .desktop para o autostart
+
+wget https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop
+
+[ -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
+
+# Baixa .sh de instalação dos programas
+
+wget https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh
+
+auto_sudo "mv ./script-cork.sh /usr/local/bin"
+
+# Sessão de captura dos programas a serem instalados
 
 ress="n"
 
@@ -142,11 +156,11 @@ while [ "${ress,,}" == "n" ]; do
 
 done
 
-arquivo_programas > programas.txt
+arquivo_programas > ${HOME}/programas.txt
 
-rm ./temp.txt
+rm ${install_dir}/temp.txt
 
-echo "${array_answer[@]}" > ./ress.txt
+echo "${array_answer[@]}" > ${install_dir}/ress.txt
 
 # ===========================================================
 
