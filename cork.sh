@@ -39,24 +39,6 @@ print_usage() {
 
 }
 
-# ===========================================================
-#
-# Sessão de declaração de variáveis
-#
-# ===========================================================
-
-readonly version="2.4.4"
-
-array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
-
-# ===========================================================
-#
-# Inicio do programa
-#
-# ===========================================================
-
-# ===========================================================
-
 # Sessão de captura de argumentso (GETOPTS)
 
 while getopts 'vh' opts 2> /dev/null; do
@@ -77,6 +59,34 @@ while getopts 'vh' opts 2> /dev/null; do
 done
 
 shift $((OPTIND - 1))
+
+# ===========================================================
+#
+# Sessão de declaração de variáveis
+#
+# ===========================================================
+
+readonly version="2.4.4"
+
+array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
+
+# ===========================================================
+#
+# Inicio do programa
+#
+# ===========================================================
+
+# Baixa .desktop para o autostart
+
+wget https://raw.githubusercontent.com/rhuan-pk/cork/master/cork.desktop
+
+[ -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
+
+# Baixa .sh de instalação dos programas
+
+wget https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh
+
+mv ./script-cork.sh /usr/local/bin
 
 # ===========================================================
 
@@ -218,5 +228,33 @@ auto_sudo "apt install curl -y"
 sleep 5
 
 clear
+
+echo ""
+echo "======================   Version ${version}   ======================"
+echo ""
+echo ""
+echo "A simple solution..."
+echo ""
+echo "Created by: Crazy Group Inc © (CG)"
+echo ""
+echo ""
+echo "================================================================"
+
+echo ""
+echo "Reiniciando em 30s (cancelar o reboot: ctrl+c)"
+echo ""
+
+seconds=30
+
+sif=$(( $(date +%s) + ${seconds} )) #seconds in the future
+
+while [ ${sif} -ge $(date +%s) ]; do 
+	
+	sifdiff=$(( ${sif} - $(date +%s) ))
+	echo -ne "$(date -u --date @${sifdiff} +%H:%M:%S)\r"
+	
+done
+
+reboot
 
 # ===========================================================
