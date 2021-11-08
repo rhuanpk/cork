@@ -144,7 +144,7 @@ password=$(cat ${install_dir}/pass.txt)
 
 for ((i=0; i<=${#array_program[@]}; ++i)); do
     
-        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -ne "${i}p")
+        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -n "\$ip")
 
 done
 
