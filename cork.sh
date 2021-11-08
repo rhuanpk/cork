@@ -140,6 +140,8 @@ auto_sudo "mv ${install_dir}/script-cork.sh /usr/local/bin"
 
 # Sessão de captura dos programas a serem instalados
 
+clear
+
 ress="n"
 
 while [ "${ress,,}" == "n" ]; do
@@ -246,8 +248,6 @@ echo ""
 auto_sudo "apt install curl -y"
 
 sleep 5
-
-clear
 
 echo ""
 echo "======================   Version ${version}   ======================"
