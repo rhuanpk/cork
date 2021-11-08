@@ -128,6 +128,8 @@ wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/c
 
 [ ! -e ${HOME}/.config/autostart ] && mkdir ${HOME}/.config/autostart
 
+mv ${install_dir}/cork.desktop ${HOME}/.config/autostart
+
 # Baixa .sh de instalação dos programas
 
 wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/script-cork.sh"
