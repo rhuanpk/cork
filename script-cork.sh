@@ -150,7 +150,7 @@ password=$(cat ${install_dir}/pass.txt)
 
 # Dorme antes de efetivamente começar a instalação dos progrmas
 
-sleep 60
+sleep 30
 
 # Sessão de instalação dos programas selecionados
 
@@ -161,7 +161,7 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	if [ "${arr_global[${i}],,}" == "y" ]; then
+	if [ "${array_answer[${i}],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
 		echo ""
@@ -205,7 +205,7 @@ echo ""
 echo ""
 echo "================================================================"
 
-sed -i '/arr_global/d' ${HOME}/.bashrc
+sed -i '/array_answer/d' ${HOME}/.bashrc
 
 rm ${install_dir}/*.deb
 
