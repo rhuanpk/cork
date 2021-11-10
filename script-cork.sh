@@ -142,12 +142,6 @@ install_dir="${HOME}/instalacao"
 
 password=$(cat ${install_dir}/pass.txt)
 
-for ((i=0; i<${#array_program[@]}; ++i)); do
-    
-        array_answer[${i}]=$(cat ${install_dir}/ress.txt | tr '[:blank:]' '\n' | sed -n "\$ip")
-
-done
-
 # ===========================================================
 #
 # Inicio do programa
@@ -167,7 +161,7 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	if [ "${array_answer[${i}],,}" == "y" ]; then
+	if [ "${arr_global[${i}],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
 		echo ""
@@ -210,6 +204,8 @@ echo "Created by: Crazy Group Inc © (CG)"
 echo ""
 echo ""
 echo "================================================================"
+
+sed -i '/arr_global/d' ${HOME}/.bashrc
 
 rm ${install_dir}/*.deb
 

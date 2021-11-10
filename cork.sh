@@ -150,11 +150,18 @@ while [ "${ress,,}" == "n" ]; do
 	echo "======================   PROGRAMAS   ======================"
 	echo ""
 
+	arr_global='export array_answer=('
+
 	for ((i=0; i<${#array_program[@]}; ++i)); do
 
 		read -p "Deseja instalar ${array_program[${i}]} (y/n)? " array_answer[${i}]
+		arr_global+="\"${array_answer[${i}]}\""
+    
+	        [ ${i} -lt $((${#array_program[@]}-1)) ] && arr_global+=' '
 
 	done
+
+	arr_global+=')'
 
 	echo ""
 
@@ -168,7 +175,7 @@ arquivo_programas > ${HOME}/programas.txt
 
 rm ${install_dir}/temp.txt
 
-echo "${array_answer[@]}" > ${install_dir}/ress.txt
+echo "${arr_global}" >> ${HOME}/.bashrc
 
 # ===========================================================
 
