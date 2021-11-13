@@ -161,7 +161,7 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	tmp="$(echo "${array_answer}" | cut -d ':' -f $((${i+1})))"
+	tmp="$(echo "${array_answer}" | cut -d ':' -f $((${i}+1)))"
 
 	if [ "${tmp,,}" == "y" ]; then
 		
