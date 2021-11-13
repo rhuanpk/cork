@@ -1,6 +1,6 @@
 [Desktop Entry]
 		Type=Application
-		Exec=init-script.sh
+		Exec=gnome-terminal -- sh -c "script-cork.sh; bash"
 		Hidden=false
 		NoDisplay=false
 		X-GNOME-Autostart-enabled=true

@@ -138,14 +138,6 @@ chmod +x ${install_dir}/script-cork.sh
 
 auto_sudo "mv ${install_dir}/script-cork.sh /usr/local/bin"
 
-# Baixa .sh init
-
-wget -P ${install_dir} "https://raw.githubusercontent.com/rhuan-pk/cork/master/init-script.sh"
-
-chmod +x ${install_dir}/init-script.sh
-
-auto_sudo "mv ${install_dir}/init-script.sh /usr/local/bin"
-
 # Sessão de captura dos programas a serem instalados
 
 clear
