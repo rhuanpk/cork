@@ -161,7 +161,9 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	if [ "${array_answer[${i}],,}" == "y" ]; then
+	tmp="$(echo "${array_answer}" | cut -d ':' -f $((${i+1})))"
+
+	if [ "${tmp,,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
 		echo ""
