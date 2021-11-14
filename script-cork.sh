@@ -165,6 +165,8 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
+	echo "${array_answer[${i}]}"
+
 	if [ "${array_answer[${i}],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
@@ -177,6 +179,8 @@ for ((i=0; i<${#array_program[@]}; ++i)); do
 	fi
 
 done
+
+sleep 30
 
 # ===========================================================
 
