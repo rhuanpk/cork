@@ -134,7 +134,7 @@ fun10() {
 #
 # ===========================================================
 
-readonly version="2.4.4"
+readonly version="3.0.0"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
@@ -164,8 +164,6 @@ echo ""
 echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
-
-	echo "${array_answer[${i}]}"
 
 	if [ "${array_answer[${i}],,}" == "y" ]; then
 		
