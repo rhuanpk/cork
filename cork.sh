@@ -74,7 +74,7 @@ shift $((OPTIND - 1))
 #
 # ===========================================================
 
-readonly version="2.4.4"
+readonly version="3.0.0"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
