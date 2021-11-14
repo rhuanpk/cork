@@ -142,6 +142,10 @@ install_dir="${HOME}/instalacao"
 
 password=$(cat ${install_dir}/pass.txt)
 
+for ((i=0;i<${#array_program[@]};++i)); do
+	array_answer=$(cut -d ':' -f $((${i}+1)) ${install_dir}/answer_file)
+done
+
 # ===========================================================
 #
 # Inicio do programa
@@ -163,7 +167,7 @@ for ((i=0; i<${#array_program[@]}; ++i)); do
 
 	tmp="$(echo "${array_answer}" | cut -d ':' -f $((${i}+1)))"
 
-	if [ "${tmp,,}" == "y" ]; then
+	if [ "${array_answer[${i}],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
 		echo ""
