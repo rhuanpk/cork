@@ -143,7 +143,7 @@ install_dir="${HOME}/instalacao"
 password=$(cat ${install_dir}/pass.txt)
 
 for ((i=0;i<${#array_program[@]};++i)); do
-	array_answer=$(cut -d ':' -f $((${i}+1)) ${install_dir}/answer_file)
+	array_answer[${i}]=$(cut -d ':' -f $((${i}+1)) ${install_dir}/answer_file)
 done
 
 # ===========================================================
