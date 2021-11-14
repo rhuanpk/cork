@@ -165,8 +165,6 @@ echo ""
 
 for ((i=0; i<${#array_program[@]}; ++i)); do
 
-	tmp="$(echo "${array_answer}" | cut -d ':' -f $((${i}+1)))"
-
 	if [ "${array_answer[${i}],,}" == "y" ]; then
 		
 		echo "======================   ${array_program[${i}]}   ======================"
@@ -222,6 +220,8 @@ rm ${install_dir}/cork.sh
 auto_sudo "rm /usr/local/bin/script-cork.sh"
 
 rm ${install_dir}/pass.txt
+
+rm ${install_dir}/answer_file
 
 rm ${HOME}/.config/autostart/cork.desktop
 
