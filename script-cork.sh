@@ -42,7 +42,8 @@ fun1() {
 
 fun2() {
 
-	wget -O discord_tmp.deb -P ${install_dir} "https://discord.com/api/download?platform=linux&format=deb"
+	wget -O discord_tmp.deb "https://discord.com/api/download?platform=linux&format=deb" 
+	mv ./discord*.deb ${install_dir}
 	sleep 10
 	auto_sudo "dpkg -i ${install_dir}/discord*.deb"
 	auto_sudo "apt install -f -y"
@@ -74,7 +75,8 @@ fun4() {
 
 fun5() {
 
-	wget -O postman_temp.tar.gz -P ${install_dir} "https://dl.pstmn.io/download/latest/linux64" 
+	wget -O postman_temp.tar.gz "https://dl.pstmn.io/download/latest/linux64" 
+	mv ./postman*.tar.gz ${install_dir}
 	auto_sudo "tar -zxvf ${install_dir}/postman*.tar.gz -C /opt/"
 	auto_sudo "ln -s /opt/Postman/Postman /usr/bin/postman"
 	echo -e "[Desktop Entry]\n\tEncoding=UTF-8\n\tName=Postman\n\tComment=Postman API Client\n\tIcon=/opt/Postman/app/resources/app/assets/icon.png\n\tExec=/usr/bin/postman\n\tTerminal=false\n\tType=Application\n\tCategories=Desenvolvimento" > ${HOME}/.local/share/applications/postman.desktop
@@ -134,7 +136,7 @@ fun10() {
 #
 # ===========================================================
 
-readonly version="3.0.0"
+readonly version="3.0.1"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
