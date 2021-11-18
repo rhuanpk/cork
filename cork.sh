@@ -74,7 +74,7 @@ shift $((OPTIND - 1))
 #
 # ===========================================================
 
-readonly version="3.0.0"
+readonly version="3.0.1"
 
 array_program=("CHROME" "VS-CODE" "DISCORD" "FILEZILLA" "ANYDESK" "POSTMAN" "MY-SQL/WORKBENCH" "SIMPLESCREENRECORDER" "FLAMESHOT" "KOLOURPAINT" "NPM")
 
@@ -258,7 +258,7 @@ echo ""
 echo ""
 echo "A simple solution..."
 echo ""
-echo "Created by: Crazy Group Inc © (CG)"
+echo "Created by: github.com/rhuan-pk"
 echo ""
 echo ""
 echo "================================================================"
